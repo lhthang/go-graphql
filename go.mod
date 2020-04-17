@@ -3,15 +3,16 @@ module mgo-gin
 go 1.14
 
 require (
-	cloud.google.com/go v0.38.0
-	firebase.google.com/go v3.12.0+incompatible
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/ekyoung/gin-nice-recovery v0.0.0-20160510022553-1654dca486db
+	github.com/friendsofgo/graphiql v0.2.2
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-errors/errors v1.0.1 // indirect
 	github.com/go-openapi/spec v0.19.7 // indirect
 	github.com/go-openapi/swag v0.19.8 // indirect
+	github.com/google/go-cmp v0.3.0 // indirect
+	github.com/graphql-go/graphql v0.7.9
 	github.com/jinzhu/copier v0.0.0-20190924061706-b57f9002281a
 	github.com/jinzhu/gorm v1.9.12
 	github.com/joho/godotenv v1.3.0
@@ -25,6 +26,7 @@ require (
 	golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
 	golang.org/x/tools v0.0.0-20200313205530-4303120df7d8 // indirect
-	google.golang.org/api v0.20.0
+	google.golang.org/appengine v1.5.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

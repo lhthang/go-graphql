@@ -1,9 +1,6 @@
 package main
 
-import (
-	"mgo-gin/app"
-)
-
+import "mgo-gin/app"
 
 // @title Swagger Example API
 // @version 1.0
@@ -23,7 +20,26 @@ import (
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
-func main(){
+
+type reqBody struct {
+	Query string `json:"query"`
+}
+
+
+
+func main() {
 	var server app.Routes
 	server.StartGin()
+
+	/*query := `
+		 {
+	        tutorial(id:"1") {
+
+	            title
+	            author {
+	                Name
+	            }
+	        }
+	    }*/
+
 }

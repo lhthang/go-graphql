@@ -2,29 +2,31 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"mgo-gin/app/form"
 	"mgo-gin/app/repository"
 	"mgo-gin/db"
 	err2 "mgo-gin/utils/err"
-	"mgo-gin/utils/firebase"
 	"net/http"
 )
 
 func ApplyToDoAPI(app *gin.RouterGroup, resource *db.Resource) {
 	toDoEntity := repository.NewToDoEntity(resource)
-	toDoRoute := app.Group("/todo")
+	toDoRoute := app.Group("/todos")
 
 	toDoRoute.GET("", getAllToDo(toDoEntity))
 	toDoRoute.GET("/:id", getToDoById(toDoEntity))
 	toDoRoute.POST("", createToDo(toDoEntity))
 	toDoRoute.PUT("/:id", updateToDo(toDoEntity))
-
-	testRoute := app.Group("/todo")
-	testRoute.POST("/test", upload())
-	testRoute.POST("/upload", uploadFile())
 }
 
+// GetAllTodo godoc
+// @Summary Get all Todotask
+// @Description Get all Todotask
+// @Accept  json
+// @Produce  json
+// @Security ApiKeyAuth
+// @Success 200 {array} form.ToDoResp
+// @Router /todos [get]
 func getAllToDo(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		list, code, err := toDoEntity.GetAll()
@@ -36,6 +38,14 @@ func getAllToDo(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 	}
 }
 
+// CreateToDo godoc
+// @Summary Create Todotask
+// @Description Create Todotask
+// @Accept  json
+// @Produce  json
+// @Param todoForm body form.ToDoForm true "ToDoForm"
+// @Success 200 {object} form.ToDoResp
+// @Router /todos [post]
 func createToDo(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 
@@ -53,6 +63,14 @@ func createToDo(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 	}
 }
 
+// GetTodoById godoc
+// @Summary Get Todotask by id
+// @Description Get Todotask by id
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ToDotask ID"
+// @Success 200 {object} form.ToDoResp
+// @Router /todos/{id} [get]
 func getToDoById(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
@@ -65,6 +83,15 @@ func getToDoById(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 	}
 }
 
+// UpdateToDo godoc
+// @Summary Update Todotask
+// @Description Update Todotask
+// @Accept  json
+// @Produce  json
+// @Param todoForm body form.ToDoForm true "ToDoForm"
+// @Param id path int true "ToDotask ID"
+// @Success 200 {object} form.ToDoResp
+// @Router /todos/{id} [put]
 func updateToDo(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
@@ -79,34 +106,5 @@ func updateToDo(toDoEntity repository.IToDo) func(ctx *gin.Context) {
 			"err":  err2.GetErrorMessage(err),
 		}
 		ctx.JSON(code, response)
-	}
-}
-
-func uploadFile() func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
-
-		file, err := ctx.FormFile("file")
-		if err != nil {
-			logrus.Print(err)
-		}
-		resp,code, err := firebase.UploadFile(*file)
-		response := map[string]interface{}{
-			"resp": resp,
-			"err":  err2.GetErrorMessage(err),
-		}
-		ctx.JSON(code, response)
-	}
-}
-
-func upload() func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
-
-		username := ctx.PostForm("username")
-		logrus.Print(username)
-		err := firebase.PushNotification(username)
-		response := map[string]interface{}{
-			"err": err2.GetErrorMessage(err),
-		}
-		ctx.JSON(200, response)
 	}
 }
