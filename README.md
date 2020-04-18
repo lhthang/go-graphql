@@ -5,8 +5,6 @@ Rest API with Golang, MongoDB
 * CRUD API
 * Authentication
 * Authorization
-    * Branch `master` for role authorization
-    * Branch `rbac` for roll base access control authorization
 * CORS
 * Auto generate Swagger Docs with annotations
 
@@ -20,10 +18,6 @@ Rest API with Golang, MongoDB
   - PORT = "8585" or your port
   - MONGO_HOST = "your host/ localhost:27017"
   - MONGO_DB_NAME = "your db name"
-  
-* If you want to use real-time firebase's database. Replace with your serviceAccountKey.json. Then, add these variable into .env
-  - FIREBASE_DATABASE = "your database url"
-  - FIREBASE_STORAGE = "your firebase storage"
 
 # Run
 * `go mod download` for download dependencies
@@ -31,4 +25,8 @@ Rest API with Golang, MongoDB
 
 # Swagger
 * `localhost:8585/swagger/index.html`
+
+# Graphql
+* `localhost:8585/graphql`
+* `localhost:8585/graphiql` (UI)
 

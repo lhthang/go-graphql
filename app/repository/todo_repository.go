@@ -65,19 +65,22 @@ func (entity *toDoEntity) GetAll() ([]form.ToDoResp, int, error) {
 }
 
 func (entity *toDoEntity) CreateOne(todoForm form.ToDoForm) (form.ToDoResp, int, error) {
+
 	user, _, err := UserEntity.GetOneByUsername(todoForm.Username)
 	if user == nil || err != nil {
 		return form.ToDoResp{}, getHTTPCode(err), err
 	}
+
 	todo := model.ToDo{
-		Id:   primitive.NewObjectID(),
-		Name: todoForm.Name,
+		Id:       primitive.NewObjectID(),
+		Name:     todoForm.Name,
+		Username: user.Username,
 	}
 	ctx, cancel := initContext()
 	defer cancel()
 	_, err = entity.repo.InsertOne(ctx, todo)
-
 	if err != nil {
+
 		return form.ToDoResp{}, 400, err
 	}
 	todoResp := form.ToDoResp{

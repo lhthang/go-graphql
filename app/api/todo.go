@@ -24,7 +24,6 @@ func ApplyToDoAPI(app *gin.RouterGroup, resource *db.Resource) {
 // @Description Get all Todotask
 // @Accept  json
 // @Produce  json
-// @Security ApiKeyAuth
 // @Success 200 {array} form.ToDoResp
 // @Router /todos [get]
 func getAllToDo(toDoEntity repository.IToDo) func(ctx *gin.Context) {

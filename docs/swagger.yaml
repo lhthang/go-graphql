@@ -66,8 +66,6 @@ paths:
             items:
               $ref: '#/definitions/form.ToDoResp'
             type: array
-      security:
-      - ApiKeyAuth: []
       summary: Get all Todotask
     post:
       consumes:
