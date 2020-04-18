@@ -7,11 +7,12 @@ import (
 	"mgo-gin/utils/constant"
 )
 
+
 var toDoType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "ToDo",
 	Fields: graphql.Fields{
 		"id": &graphql.Field{
-			Type: graphql.String,
+			Type: ObjectID,
 		},
 		"username": &graphql.Field{
 			Type: graphql.String,
@@ -26,7 +27,7 @@ var userType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "User",
 	Fields: graphql.Fields{
 		"id": &graphql.Field{
-			Type: graphql.String,
+			Type: ObjectID,
 		},
 		"username": &graphql.Field{
 			Type: graphql.String,
