@@ -12,6 +12,10 @@ Rest API with Golang, MongoDB
 * [Gin](https://github.com/gin-gonic/gin)
 * [MongoDB](https://www.mongodb.com)
 
+# Packages
+* [Graphql](https://github.com/graphql-go/graphql)
+* [Graphiql](https://github.com/friendsofgo/graphiql)
+
 # Set up
 * Create file .env
 * Set MongoDB URI and DB

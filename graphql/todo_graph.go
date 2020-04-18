@@ -4,6 +4,7 @@ import (
 	"github.com/graphql-go/graphql"
 	"mgo-gin/app/form"
 	"mgo-gin/app/repository"
+	"mgo-gin/utils/constant"
 )
 
 var toDoType = graphql.NewObject(graphql.ObjectConfig{
@@ -108,6 +109,11 @@ func CreateToDo() *graphql.Field {
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			token:=p.Context.Value("token").(string)
+			err :=RequireAuthorization(token,constant.ADMIN)
+			if err!=nil{
+				return nil,err
+			}
 			name, ok := p.Args["name"].(string)
 			username, ok := p.Args["username"].(string)
 			if ok {

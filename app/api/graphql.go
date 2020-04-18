@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/friendsofgo/graphiql"
@@ -39,13 +40,14 @@ func handleGraph(schema graphql.Schema) func(ctx *gin.Context) {
 		result := graphql.Do(graphql.Params{
 			Schema:        schema,
 			RequestString: rBody.Query,
+			Context:       context.WithValue(context.Background(), "token", ctx.Request.URL.Query().Get("token")),
 		})
 		if result.HasErrors() {
 			errs := []string{}
 			for _, err := range result.Errors {
 				errs = append(errs, err.Message)
 			}
-			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"err": errs})
+			ctx.JSON(http.StatusBadRequest, result)
 			return
 		}
 		ctx.JSON(200, result)
